@@ -3,7 +3,7 @@
     "id": 1,
     "titulo": "Dune",
     "imagen": "dune.jpg",
-    "genero": "Aventura",
+    "genero": ["Aventura","Acción"],
     "sinopsis": "Un joven emprende una misión para salvar su mundo.",
     "estreno": "2026-05-10",
     "precios": {
@@ -16,7 +16,7 @@
     "id": 2,
     "titulo": "50 primeras citas",
     "imagen": "50-primeras-citas.jpg",
-    "genero": "Comedia",
+    "genero": ["Comedia","Romance"],
     "sinopsis": "Henry se enamora de Lucy, una mujer con pérdida de memoria a corto plazo.",
     "estreno": "2010-12-08",
     "precios": {
@@ -29,7 +29,7 @@
     "id": 3,
     "titulo": "Batman Caballero de la Noche",
     "imagen": "batman-caballero-de-la-noche.webp",
-    "genero": "Acción",
+    "genero": ["Acción","Ciencia Ficcion"],
     "sinopsis": "La película comienza con el violento robo de uno de los bancos de la mafia por una banda de payasos.",
     "estreno": "2016-03-17",
     "precios": {
@@ -37,5 +37,70 @@
       "normal": 3
     },
     "trailer": "https://www.youtube.com/embed/dzQtWkpc2-c"
+  },
+   {
+    "id": 4,
+    "titulo": "La Dama y el Vagabundo",
+    "imagen": "la-dama-y-el-vagabundo.jpg",
+    "genero": ["Romance", "Comedia familiar", "Musical"],
+    "sinopsis": "Narra el romance entre Reina, una cocker spaniel mimada, y Golfo, un perro mestizo callejero. Tras sentirse desplazada por la llegada de un bebé a su hogar, Reina se escapa y conoce la libertad junto a Golfo, viviendo aventuras que superan sus diferencias sociales.",
+    "estreno": "1955-06-22",
+    "precios": {
+      "estreno": 5,
+      "normal": 3
+    },
+    "trailer": "https://geo.dailymotion.com/player.html?video=x8x2ily"
+  },
+   {
+    "id": 5,
+    "titulo": "Dumbo",
+    "imagen": "dumbo.jpeg",
+    "genero": ["Fantasía", "Aventuras", "Cine familiar"],
+    "sinopsis": "un pequeño elefante de circo ridiculizado por sus enormes orejas. Tras separar a su madre por defenderlo, Dumbo se hace amigo del ratón Timoteo y descubre que puede volar con ellas, convirtiéndose en una estrella.",
+    "estreno": "2019-03-29",
+    "precios": {
+      "estreno": 5,
+      "normal": 3
+    },
+    "trailer": "https://geo.dailymotion.com/player.html?video=x71zdgm"
+  },
+   {
+    "id": 6,
+    "titulo": "Mortal Kombat II",
+    "imagen": "Mortal-Kombat-II.jpg",
+    "genero": ["Acción", "Fantasía", "Artes Marciales", "Ciencia Ficción"],
+    "sinopsis": "Continúa la lucha de los campeones de Earthrealm contra el Mundo Exterior.",
+    "estreno": "2026-05-08",
+    "precios": {
+      "estreno": 5,
+      "normal": 3
+    },
+    "trailer": "https://geo.dailymotion.com/player.html?video=x9wi2ho"
+  },
+   {
+    "id": 7,
+    "titulo": "El Seañor de los Anillos",
+    "imagen": "el-señor-de-los-anillos.jpg",
+    "genero": ["Fantasía Épica", "Aventura"],
+    "sinopsis": "Narra la misión del hobbit Frodo Bolsón para destruir el ´Anillo Único´. Creado por el señor oscuro Sauron para dominar la Tierra Media.",
+    "estreno": "2016-03-17",
+    "precios": {
+      "estreno": 5,
+      "normal": 3
+    },
+    "trailer": "https://geo.dailymotion.com/player.html?video=x8peen3"
+  },
+   {
+    "id": 8,
+    "titulo": "Rome y Julieta",
+    "imagen": "romeo-juliet.jpg",
+    "genero": ["Romance", "Tragedia", "Drama"],
+    "sinopsis": "dos jóvenes de familias rivales (Montesco y Capuleto) cuyo amor apasionado e intenso desafía la violencia y el odio ancestral entre sus clanes, llevándolos a un trágico final.",
+    "estreno": "1996-11-01",
+    "precios": {
+      "estreno": 5,
+      "normal": 3
+    },
+    "trailer": "https://geo.dailymotion.com/player.html?video=x9snx5g"
   }
 ]
