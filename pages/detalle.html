@@ -1,141 +1,183 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Detalle de Película</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <title>Detalle de Película</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <body>
-    <div class="container py-5">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
 
-      <!-- TÍTULO Y TRAILER -->
-      <div class="text-center mb-4">
-        <h2 id="titulo" class="mb-3"></h2>
+<body>
+  <div class="container py-5">
 
-        <div class="alert alert-info">
-          ¡Disfruta del tráiler oficial y conoce más sobre esta película!
-        </div>
+    <!-- TÍTULO Y TRAILER -->
+    <div class="text-center mb-4">
+      <h2 id="titulo" class="mb-3"></h2>
 
-        <div class="ratio ratio-16x9 mb-4">
-          <iframe id="trailer" src="" allowfullscreen></iframe>
-        </div>
+      <div class="alert alert-info">
+        ¡Disfruta del tráiler oficial y conoce más sobre esta película!
       </div>
 
-      <!-- DETALLE -->
-      <div class="card mb-4">
-        <div class="row g-0">
-          <div class="col-md-4">
-            <img id="poster" class="img-fluid rounded-start" />
-          </div>
-          <div class="col-md-8">
-            <div class="card-body">
-              <h5>Sinopsis</h5>
-              <p id="sinopsis"></p>
-              <span id="genero" class="badge bg-secondary"></span>
-            </div>
-          </div>
-        </div>
+      <div class="ratio ratio-16x9 mb-4">
+        <iframe id="trailer" src="" allowfullscreen></iframe>
       </div>
-
-      <!-- FORMULARIO -->
-      <div class="card p-4 mt-4">
-        <h4>Reservar Película</h4>
-
-        <div class="mb-3">
-          <label>Nombre</label>
-          <input type="text" id="nombre" class="form-control" />
-        </div>
-        
-        <div class="mb-3">
-          <label>Correo</label>
-          <input type="email" id="correo" class="form-control" />
-        </div>
-
-        <button id="btnReservar" class="btn btn-primary">
-          Reservar
-        </button>
-
-        <div id="mensaje" class="mt-3"></div>
-      </div>
-
-      <div class="text-center mt-4">
-        <a href="../index.html" class="btn btn-secondary">
-          Volver al inicio
-        </a>
-      </div>
-
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <!-- DETALLE -->
+    <div class="card mb-4">
+      <div class="row g-0">
+        <div class="col-md-4">
+          <img id="poster" class="img-fluid rounded-start" />
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5>Sinopsis</h5>
+            <p id="sinopsis"></p>
+            <h5 id="precio" class="mt-3"></h5>
+            <span id="estado" class="badge"></span> 
+            <span id="genero" class="badge bg-secondary"></span>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    <script>
-      $(function () {
+    <!-- RESEÑAS -->
+    <h4>Reseñas</h4>
+    <div id="reseñas"></div>
 
-        // 🔹 Obtener ID de la URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const id = urlParams.get("id");
+    <!-- FORMULARIO -->
+    <div class="card p-4 mt-4">
+      <h4>Reservar Película</h4>
 
-        //  Cargar película
-        $.ajax({
-          url: "../data/peliculas.json",
-          method: "GET",
-          dataType: "json",
+      <div class="mb-3">
+        <label>Nombre</label>
+        <input type="text" id="nombre" class="form-control" />
+      </div>
 
-          success: function (peliculas) {
-            const peli = peliculas.find((p) => p.id == id);
+      <div class="mb-3">
+        <label>Correo</label>
+        <input type="email" id="correo" class="form-control" />
+      </div>
 
-            if (peli) {
-              $("#titulo").text(peli.titulo);
-              $("#poster").attr("src", "../img/" + peli.imagen);
-              $("#sinopsis").text(peli.sinopsis);
-              $("#trailer").attr("src", peli.trailer);
-              $("#genero").text(peli.genero);
-            }
+      <button id="btnReservar" class="btn btn-primary">
+        Reservar
+      </button>
+
+      <div id="mensaje" class="mt-3"></div>
+    </div>
+
+    <div class="text-center mt-4">
+      <a href="../index.html" class="btn btn-secondary">
+        Volver al inicio
+      </a>
+    </div>
+
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+  <script>
+    $(function () {
+
+      // 🔹 Obtener ID
+      const urlParams = new URLSearchParams(window.location.search);
+      const id = urlParams.get("id");
+
+      // 🔹 Cargar película
+      $.getJSON("../data/peliculas.json", function (peliculas) {
+
+        const peli = peliculas.find(p => p.id == id);
+
+        if (peli) {
+
+          const hoy = new Date();
+          const estreno = new Date(peli.estreno);
+
+          let precio, estado;
+
+          if (hoy <= estreno) {
+            precio = peli.precios.estreno;
+            estado = "Estreno";
+            $("#estado").addClass("bg-danger");
+          } else {
+            precio = peli.precios.normal;
+            estado = "En cartelera";
+            $("#estado").addClass("bg-success");
           }
+
+          $("#titulo").text(peli.titulo);
+          $("#poster").attr("src", "../img/" + peli.imagen);
+          $("#sinopsis").text(peli.sinopsis);
+          $("#precio").text("Precio: $" + precio);
+          $("#estado").text(estado);
+          $("#trailer").attr("src", peli.trailer);
+
+          let genero = Array.isArray(peli.generos)
+            ? peli.generos.join(", ")
+            : peli.genero || "Sin género";
+
+          $("#genero").text(genero);
+        }
+      });
+
+      //  CARGAR RESEÑAS
+      $.getJSON("../data/reseñas.json", function (reseñas) {
+
+        let filtradas = reseñas.filter(r => r.peliculaId == parseInt(id));
+
+        let html = "";
+
+        filtradas.forEach(r => {
+          let estrellas = "🌟".repeat(r.calificacion);
+
+          html += `
+            <div class="card mb-2 p-2">
+              <strong>${r.usuario}</strong>
+              <p>${r.comentario}</p>
+              <div>${estrellas}</div>
+            </div>
+          `;
         });
 
-        //  VALIDACIÓN
-        $("#btnReservar").click(function () {
+        $("#reseñas").html(html);
+      });
 
-  let nombre = $("#nombre").val();
-  let correo = $("#correo").val();
+      // 🔹 VALIDACIÓN RESERVA
+      $("#btnReservar").click(function () {
 
-  if (nombre === "" || correo === "") {
-    $("#mensaje").html(`
-      <div class="alert alert-danger">
-        Todos los campos son obligatorios
-      </div>
-    `);
-    return;
-  }
+        let nombre = $("#nombre").val();
+        let correo = $("#correo").val();
 
-  const reserva = {
-    nombre: nombre,
-    correo: correo,
-    pelicula: $("#titulo").text()
-  };
+        if (nombre === "" || correo === "") {
+          $("#mensaje").html(`
+            <div class="alert alert-danger">
+              Todos los campos son obligatorios
+            </div>
+          `);
+          return;
+        }
 
-  let reservas = JSON.parse(localStorage.getItem("reservas")) || [];
+        const reserva = {
+          nombre,
+          correo,
+          pelicula: $("#titulo").text()
+        };
 
-  reservas.push(reserva);
+        let reservas = JSON.parse(localStorage.getItem("reservas")) || [];
+        reservas.push(reserva);
+        localStorage.setItem("reservas", JSON.stringify(reservas));
 
-  localStorage.setItem("reservas", JSON.stringify(reservas));
-
-  $("#mensaje").html(`
-    <div class="alert alert-success">
-      Reserva realizada con éxito
-    </div>
-  `);
-
-});
+        $("#mensaje").html(`
+          <div class="alert alert-success">
+            Reserva realizada con éxito
+          </div>
+        `);
 
       });
-    </script>
 
-  </body>
+    });
+  </script>
+
+</body>
 </html>

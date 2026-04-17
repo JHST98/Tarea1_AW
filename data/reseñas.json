@@ -1,0 +1,26 @@
+[
+  {
+    "peliculaId": 7,
+    "usuario": "Juan",
+    "comentario": "Una película impresionante con efectos visuales increíbles y una historia envolvente que mantiene la atención de principio a fin.",
+    "calificacion": 5
+  },
+  {
+    "peliculaId": 1,
+    "usuario": "María",
+    "comentario": "Muy buena, aunque algo lenta en algunas partes, pero en general vale la pena verla por su calidad visual.",
+    "calificacion": 4
+  },
+  {
+    "peliculaId": 2,
+    "usuario": "Carlos",
+    "comentario": "Divertida y romántica, perfecta para pasar el rato. Los personajes tienen mucha química.",
+    "calificacion": 4
+  },
+  {
+    "peliculaId": 8,
+    "usuario": "Ana",
+    "comentario": "Una historia muy bonita y entretenida, ideal para ver en pareja o con amigos.",
+    "calificacion": 5
+  }
+]

@@ -23,7 +23,36 @@ $(document).ready(function () {
     precio = peli.precios.normal;
     badge = "<span class='badge bg-success'>En cartelera</span>";
   }
+// SOLO se ejecuta en detalle.html
+if (window.location.pathname.includes("detalle.html")) {
 
+  let id = new URLSearchParams(window.location.search).get("id");
+
+  $.getJSON("../data/reseñas.json", function (reseñas) {
+
+    let filtradas = reseñas.filter(r => r.peliculaId == id);
+
+    let html = "";
+
+    filtradas.forEach(r => {
+
+      let estrellas = "*".repeat(r.calificacion);
+
+      html += `
+        <div class="card mb-2 p-2">
+          <strong>${r.usuario}</strong>
+          <p>${r.comentario}</p>
+          <div>${estrellas}</div>
+        </div>
+      `;
+    });
+
+    $("#reseñas").html(html);
+
+  });
+
+}
+  
   html += `
     <div class="col-md-4">
       <div class="card h-100 shadow">
