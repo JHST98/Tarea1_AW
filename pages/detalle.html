@@ -2,23 +2,34 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Detalle de Película</title>
+  <title>Detalle de Película - CinePlus</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
 </head>
-
 <body>
-  <div class="container py-5">
 
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">CinePlus</a>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="../index.html">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
+          <li class="nav-item"><a class="nav-link" href="renta.html">Rentar</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="container py-5">
     <!-- TÍTULO Y TRAILER -->
     <div class="text-center mb-4">
       <h2 id="titulo" class="mb-3"></h2>
-
-      <div class="alert alert-info">
-        ¡Disfruta del tráiler oficial y conoce más sobre esta película!
-      </div>
-
+      <div class="alert alert-info">¡Disfruta del tráiler oficial y conoce más sobre esta película!</div>
       <div class="ratio ratio-16x9 mb-4">
         <iframe id="trailer" src="" allowfullscreen></iframe>
       </div>
@@ -46,56 +57,41 @@
     <h4>Reseñas</h4>
     <div id="reseñas"></div>
 
-    <!-- FORMULARIO -->
+    <!-- FORMULARIO RESERVA -->
     <div class="card p-4 mt-4">
       <h4>Reservar Película</h4>
-
       <div class="mb-3">
         <label>Nombre</label>
         <input type="text" id="nombre" class="form-control" />
       </div>
-
       <div class="mb-3">
         <label>Correo</label>
         <input type="email" id="correo" class="form-control" />
       </div>
-
-      <button id="btnReservar" class="btn btn-primary">
-        Reservar
-      </button>
-
+      <button id="btnReservar" class="btn btn-primary">Reservar</button>
       <div id="mensaje" class="mt-3"></div>
     </div>
+  </main>
 
-    <div class="text-center mt-4">
-      <a href="../index.html" class="btn btn-secondary">
-        Volver al inicio
-      </a>
-    </div>
-
-  </div>
+  <!-- FOOTER -->
+  <footer>
+    <small>&copy; 2024 CinePlus. Todos los derechos reservados.</small>
+  </footer>
 
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script>
+    // Aquí va todo tu código JavaScript (el que ya tenías)
     $(function () {
-
-      // 🔹 Obtener ID
       const urlParams = new URLSearchParams(window.location.search);
       const id = urlParams.get("id");
 
-      // 🔹 Cargar película
       $.getJSON("../data/peliculas.json", function (peliculas) {
-
         const peli = peliculas.find(p => p.id == id);
-
         if (peli) {
-
           const hoy = new Date();
           const estreno = new Date(peli.estreno);
-
           let precio, estado;
-
           if (hoy <= estreno) {
             precio = peli.precios.estreno;
             estado = "Estreno";
@@ -105,79 +101,41 @@
             estado = "En cartelera";
             $("#estado").addClass("bg-success");
           }
-
           $("#titulo").text(peli.titulo);
           $("#poster").attr("src", "../img/" + peli.imagen);
           $("#sinopsis").text(peli.sinopsis);
           $("#precio").text("Precio: $" + precio);
           $("#estado").text(estado);
           $("#trailer").attr("src", peli.trailer);
-
-          let genero = Array.isArray(peli.generos)
-            ? peli.generos.join(", ")
-            : peli.genero || "Sin género";
-
+          let genero = Array.isArray(peli.generos) ? peli.generos.join(", ") : peli.genero || "Sin género";
           $("#genero").text(genero);
         }
       });
 
-      //  CARGAR RESEÑAS
       $.getJSON("../data/reseñas.json", function (reseñas) {
-
         let filtradas = reseñas.filter(r => r.peliculaId == parseInt(id));
-
         let html = "";
-
         filtradas.forEach(r => {
           let estrellas = "🌟".repeat(r.calificacion);
-
-          html += `
-            <div class="card mb-2 p-2">
-              <strong>${r.usuario}</strong>
-              <p>${r.comentario}</p>
-              <div>${estrellas}</div>
-            </div>
-          `;
+          html += `<div class="card mb-2 p-2"><strong>${r.usuario}</strong><p>${r.comentario}</p><div>${estrellas}</div></div>`;
         });
-
         $("#reseñas").html(html);
       });
 
-      // 🔹 VALIDACIÓN RESERVA
       $("#btnReservar").click(function () {
-
         let nombre = $("#nombre").val();
         let correo = $("#correo").val();
-
         if (nombre === "" || correo === "") {
-          $("#mensaje").html(`
-            <div class="alert alert-danger">
-              Todos los campos son obligatorios
-            </div>
-          `);
+          $("#mensaje").html(`<div class="alert alert-danger">Todos los campos son obligatorios</div>`);
           return;
         }
-
-        const reserva = {
-          nombre,
-          correo,
-          pelicula: $("#titulo").text()
-        };
-
+        const reserva = { nombre, correo, pelicula: $("#titulo").text() };
         let reservas = JSON.parse(localStorage.getItem("reservas")) || [];
         reservas.push(reserva);
         localStorage.setItem("reservas", JSON.stringify(reservas));
-
-        $("#mensaje").html(`
-          <div class="alert alert-success">
-            Reserva realizada con éxito
-          </div>
-        `);
-
+        $("#mensaje").html(`<div class="alert alert-success">Reserva realizada con éxito</div>`);
       });
-
     });
   </script>
-
 </body>
 </html>

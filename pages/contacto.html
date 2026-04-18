@@ -4,34 +4,97 @@
   <meta charset="UTF-8">
   <title>Contacto - CinePlus</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <!-- Tu CSS personalizado -->
+  <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-  <div class="container py-5">
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">CinePlus</a>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="../index.html">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link active" href="contacto.html">Contacto</a></li>
+          <li class="nav-item"><a class="nav-link" href="renta.html">Rentar</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="container py-5">
     <h2 class="mb-4">Contáctanos</h2>
     <form id="form-contacto" novalidate>
       <div class="mb-3">
         <label for="nombre" class="form-label">Nombre</label>
         <input type="text" class="form-control" id="nombre" required>
+        <div class="text-danger small mt-1" id="error-nombre"></div>
       </div>
       <div class="mb-3">
         <label for="correo" class="form-label">Correo electrónico</label>
         <input type="email" class="form-control" id="correo" required>
+        <div class="text-danger small mt-1" id="error-correo"></div>
       </div>
       <div class="mb-3">
         <label for="mensaje" class="form-label">Mensaje</label>
         <textarea class="form-control" id="mensaje" rows="4" required></textarea>
+        <div class="text-danger small mt-1" id="error-mensaje"></div>
       </div>
       <button type="submit" class="btn btn-primary">Enviar</button>
       <div id="alerta" class="alert alert-success mt-3 d-none">Mensaje enviado con éxito.</div>
     </form>
-  </div>
+  </main>
 
+  <!-- FOOTER -->
+  <footer>
+    <small>&copy; 2024 CinePlus. Todos los derechos reservados.</small>
+  </footer>
+
+  <!-- SCRIPTS -->
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <script>
+    // Validación del formulario
     $('#form-contacto').on('submit', function (e) {
       e.preventDefault();
-      if (this.checkValidity()) {
+      $('#error-nombre').text('');
+      $('#error-correo').text('');
+      $('#error-mensaje').text('');
+      let valido = true;
+
+      let nombre = $('#nombre').val().trim();
+      if (nombre === '') {
+        $('#error-nombre').text('El nombre es obligatorio.');
+        valido = false;
+      }
+
+      let correo = $('#correo').val().trim();
+      if (correo === '') {
+        $('#error-correo').text('El correo es obligatorio.');
+        valido = false;
+      } else if (correo.indexOf('@') === -1 || correo.indexOf('.') === -1) {
+        $('#error-correo').text('Ingresa un correo válido (debe contener @ y .)');
+        valido = false;
+      }
+
+      let mensaje = $('#mensaje').val().trim();
+      if (mensaje === '') {
+        $('#error-mensaje').text('El mensaje es obligatorio.');
+        valido = false;
+      } else if (mensaje.length < 20) {
+        $('#error-mensaje').text(`El mensaje debe tener al menos 20 caracteres. Tiene ${mensaje.length}.`);
+        valido = false;
+      } else if (mensaje.length > 50) {
+        $('#error-mensaje').text(`El mensaje debe tener máximo 50 caracteres. Tiene ${mensaje.length}.`);
+        valido = false;
+      }
+
+      if (valido) {
         $('#alerta').removeClass('d-none').hide().fadeIn();
         setTimeout(() => $('#alerta').fadeOut(), 3000);
         this.reset();

@@ -6,4 +6,36 @@ body {
     height: 250px;
     object-fit: cover;
   }
-  
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8f9fa;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+}
+/* Hacer que el body ocupe toda la altura de la ventana */
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* El contenido principal crece para empujar el footer */
+main.container {
+    flex: 1;
+}
+
+/* Footer siempre abajo */
+footer {
+    margin-top: auto;
+    background-color: #343a40;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+}
