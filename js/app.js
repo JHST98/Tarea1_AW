@@ -7,7 +7,7 @@ $(document).ready(function () {
   }
 
   // DELEGACIÓN DE EVENTOS PARA BOTONES "VER TRÁILER"
-  // Estos eventos deben estar disponibles desde el principio, fuera del setTimeout
+ 
   $(document).on('click', '.btn-trailer', function () {
     let trailerURL = $(this).data('trailer');
     let titulo = $(this).data('titulo');
